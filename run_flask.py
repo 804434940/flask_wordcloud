@@ -1,5 +1,6 @@
 import flask
 from flask import request,url_for,redirect
+from flask import make_response,send_file
 from wordcloud_zju import word_spliter,wordclouder
 
 
@@ -22,14 +23,18 @@ def upload():
         pic_path = "./static/pic/"+pic.filename
         pic.save(pic_path)
         generate_wordcloud(text,pic_path)
-        return flask.render_template('wordcloud.html',pic_name = 'pic/'+pic.filename)
+        response = make_response(send_file(pic_path))
+        response.headers["Content-Disposition"] = "attachment; filename=wordcloud.jpg;"
+        return response
+        # return flask.render_template('wordcloud.html',pic_name = 'pic/'+pic.filename)
     else:
         err = "post method required"
     return  flask.render_template('upload.html',error=err)
 
-@APP.route('/wordcloud',methods=['GET', 'POST'])
-def showPic():
-    return flask.render_template('wordcloud.html')
+# @APP.route('/wordcloud',methods=['GET', 'POST'])
+# def showPic():
+#     response = make_response()
+#     return flask.render_template('wordcloud.html')
 
 def generate_wordcloud(text,pic):
     sp_word = word_spliter(text)

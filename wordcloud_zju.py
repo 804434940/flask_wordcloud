@@ -45,7 +45,7 @@ class wordclouder():
     def word_cloud(self):
         mask_image = imread(self.imag,flatten=False)
         word_pic = WordCloud(
-            font_path='msyh.ttc',
+            font_path='./utils/msyh.ttc',
             background_color='white',
             mask=mask_image
         ).generate(self.text)

@@ -1,6 +1,6 @@
 #ignore file
 
-static/pic/
+static/pic/*.jpg
 .idea
 __pycache__
 
